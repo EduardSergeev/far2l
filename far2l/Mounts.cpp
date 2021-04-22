@@ -68,7 +68,7 @@ namespace Mounts
 			emplace(begin(), Entry{ strRootPath, strRootName});
 		}
 
-		emplace(begin(), Entry(GetMyHome(), strHomeName));
+		// emplace(begin(), Entry(GetMyHome(), strHomeName));
 		emplace(begin(), Entry(another_curdir, strSameName));
 
 		for (const auto &m : *this) {

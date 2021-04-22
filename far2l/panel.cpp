@@ -452,7 +452,7 @@ int Panel::ChangeDiskMenu(int Pos,int FirstCall)
 		
 				ChDiskItem.strName = FixedSizeStr(m.path, std::min(mounts.max_path, (size_t)48), true);
 				ChDiskItem.strName+= BoxSymbols[BS_V1];
-				ChDiskItem.strName+= FixedSizeStr(m.info, std::min(mounts.max_info, (size_t)24), true);
+				ChDiskItem.strName+= FixedSizeStr(m.info, std::min(mounts.max_info, (size_t)24), false);
 
 				PanelMenuItem item;
 				wcsncpy(item.path, m.path.CPtr(), ARRAYSIZE(item.path) - 1);

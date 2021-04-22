@@ -45,15 +45,13 @@ else
 
 	sysname=`uname`
 	if [ "$sysname" == "Linux" ] || [ "$sysname" == "FreeBSD" ]; then
-		dfcmd='df -T | awk "-F " '\''{n=NF; while (n>5 && ! ($n ~ "/")) n--; for (;n<NF;n++) printf "%s ", $n; print $n "\t" $2 }'\'
+		dfcmd='df -T | sort -k7 | awk "-F " '\''{n=NF; while (n>5 && ! ($n ~ "/")) n--; for (;n<NF;n++) printf "%s ", $n; print $n "\t" $2 }'\'
 	else
-		dfcmd='df -t | awk "-F " '\''{n=NF; while (n>5 && ! ($n ~ "/")) n--; for (;n<NF;n++) printf "%s ", $n; print $n "\t" $1 }'\'
+		dfcmd='df -t | sort -k7 | awk "-F " '\''{n=NF; while (n>5 && ! ($n ~ "/")) n--; for (;n<NF;n++) printf "%s ", $n; print $n "\t" $1 }'\'
 	fi
 
 	while IFS=$'\n' read -r line; do
-		if [[ "$line" == "/"* ]] \
-		  && [[ "$line" != /run/* ]] && [[ "$line" != /snap/* ]] \
-		  && [[ "$line" != /sys/* ]] && [[ "$line" != /dev/* ]] ; then
+		if [[ ! "$line" =~ ^[^/]|/run|snap|sys|dev/? ]] ; then
 			echo "$line"
 		fi
 	done < <(eval "$dfcmd")
